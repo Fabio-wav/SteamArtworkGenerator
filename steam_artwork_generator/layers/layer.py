@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
 
-from steam_artwork_generator.models.gif import Gif
+from steam_artwork_generator.models import RenderContext
 
 
 class Layer(ABC):
 
     @abstractmethod
-    def apply(self, gif: Gif) -> None:
+    def draw(self, context: RenderContext) -> None:
         pass

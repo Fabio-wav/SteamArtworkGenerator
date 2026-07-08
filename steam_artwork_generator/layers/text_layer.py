@@ -1,34 +1,40 @@
+from PIL import ImageDraw, ImageFont
+
 from steam_artwork_generator.layers.layer import Layer
-from steam_artwork_generator.models.gif import Gif
-from PIL import Image, ImageDraw, ImageFont
-from pathlib import Path
+from steam_artwork_generator.models import (
+    RenderContext,
+    TextStyle,
+    Transform,
+)
+
 
 class TextLayer(Layer):
 
     def __init__(
         self,
         text: str,
-        x: int,
-        y: int,
-        font_path: str,
-        font_size: int,
-        color: tuple[int, int, int],
-    ) -> None:
-
+        style: TextStyle,
+        transform: Transform,
+    ):
         self.text = text
-        self.x = x
-        self.y = y
-        self.font_path = font_path
-        self.font_size = font_size
-        self.color = color
+        self.style = style
+        self.transform = transform
 
-    def apply(self, gif: Gif) -> None:
-        for frame in gif.frames:
-            draw = ImageDraw.Draw(frame)
-            font = ImageFont.truetype(self.font_path, self.font_size)
-            draw.text(
-                (self.x, self.y),
-                self.text,
-                font = font,
-                fill=self.color
-            )
+        self.font = ImageFont.truetype(
+            style.font_path,
+            style.font_size
+        )
+
+    def draw(self, context: RenderContext):
+
+        draw = ImageDraw.Draw(context.frame)
+
+        draw.text(
+            (
+                self.transform.x,
+                self.transform.y,
+            ),
+            self.text,
+            font=self.font,
+            fill=self.style.color,
+        )
