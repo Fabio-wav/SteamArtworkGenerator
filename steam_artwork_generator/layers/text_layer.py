@@ -28,6 +28,7 @@ class TextLayer(Layer):
         )
 
         self.text = text
+        self.render_text = text
         self.style = style
 
         self.font = ImageFont.truetype(
@@ -44,7 +45,10 @@ class TextLayer(Layer):
                 self.transform.x,
                 self.transform.y,
             ),
-            self.text,
+            self.render_text,
             font=self.font,
             fill=self.style.color,
         )
+    
+    def reset_frame(self):
+        self.render_text = self.text

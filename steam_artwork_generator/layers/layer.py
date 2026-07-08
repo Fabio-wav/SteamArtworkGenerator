@@ -4,6 +4,8 @@ from steam_artwork_generator.models import (
     Transform,
     RenderContext,
 )
+from steam_artwork_generator.animations import Animation
+
 
 
 class Layer(ABC):
@@ -20,8 +22,18 @@ class Layer(ABC):
         self.visible_from = visible_from
         self.visible_until = visible_until
 
+        self.animations: list[Animation] = []
+
+    def add_animation(self, animation):
+        self.animations.append(animation)
+        return self
+    
     @abstractmethod
-    def draw(self, context: RenderContext):
+    def reset_frame(self, context: RenderContext):
+        pass
+
+    @abstractmethod
+    def draw(self, context: RenderContext) -> None:
         pass
 
     def is_visible(self, context: RenderContext) -> bool:
