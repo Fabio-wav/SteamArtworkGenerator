@@ -1,5 +1,5 @@
 from .gif import Gif
-from .text_style import TextStyle
 from .transform import Transform
-from .frame import Frame
+from .text_style import TextStyle
+from .image_style import ImageStyle
 from .render_context import RenderContext

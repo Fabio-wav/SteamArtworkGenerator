@@ -3,7 +3,6 @@ from pathlib import Path
 from .gif_reader import GifReader
 from .gif_writer import GifWriter
 from steam_artwork_generator.scene import Scene
-from steam_artwork_generator.layers.layer import Layer
 from steam_artwork_generator.models import RenderContext
 
 class Renderer:
@@ -27,6 +26,10 @@ class Renderer:
         print(f"🎞️  Frames    : {gif.frame_count}")
         print(f"⏱️  Duração   : {gif.duration} ms/frame")
         print(f"🎨 Aplicando {len(scene.layers)} layer(s)...")
+        sorted_layers = sorted(
+            scene.layers,
+            key=lambda layer: layer.z_index
+        )
         for frame_index, frame in enumerate(gif.frames):
 
             context = RenderContext(
@@ -36,8 +39,10 @@ class Renderer:
                 duration=gif.duration,
             )
 
-            for layer in scene.layers:
-                layer.draw(context)
+            for layer in sorted_layers:
+
+                if layer.is_visible(context):
+                    layer.draw(context)
         
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
