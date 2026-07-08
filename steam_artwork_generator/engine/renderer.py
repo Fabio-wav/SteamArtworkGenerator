@@ -2,20 +2,14 @@ from pathlib import Path
 
 from .gif_reader import GifReader
 from .gif_writer import GifWriter
-
+from steam_artwork_generator.scene import Scene
 from steam_artwork_generator.layers.layer import Layer
 from steam_artwork_generator.models import RenderContext
 
 class Renderer:
-    def __init__(self):
-        self.layers: list[Layer] = []
-
-    def add_layer(self, layer: Layer):
-        self.layers.append(layer)
-        return self
     
 
-    def render(self, input_path: str, output_path: str) -> None:
+    def render(self, scene: Scene, input_path: str, output_path: str) -> None:
 
         input_path = Path(input_path)
         output_path = Path(output_path)
@@ -32,7 +26,7 @@ class Renderer:
         print(f"📐 Resolução : {gif.width}x{gif.height}")
         print(f"🎞️  Frames    : {gif.frame_count}")
         print(f"⏱️  Duração   : {gif.duration} ms/frame")
-        print(f"🎨 Aplicando {len(self.layers)} layer(s)...")
+        print(f"🎨 Aplicando {len(scene.layers)} layer(s)...")
         for frame_index, frame in enumerate(gif.frames):
 
             context = RenderContext(
@@ -42,7 +36,7 @@ class Renderer:
                 duration=gif.duration,
             )
 
-            for layer in self.layers:
+            for layer in scene.layers:
                 layer.draw(context)
         
         output_path.parent.mkdir(parents=True, exist_ok=True)

@@ -1,10 +1,10 @@
 from steam_artwork_generator.engine.renderer import Renderer
 from steam_artwork_generator.layers import TextLayer
 from steam_artwork_generator.models import TextStyle, Transform
-
+from steam_artwork_generator.scene import Scene
 def main():
 
-    renderer = Renderer()
+    scene = Scene()
 
     terminal = TextStyle(
     font_path="assets/fonts/consola.ttf",
@@ -12,7 +12,7 @@ def main():
     color=(255,255,255)
 )
 
-    renderer.add_layer(
+    scene.add(
         TextLayer(
             text="CAPETINHA.EXE",
             style=terminal,
@@ -23,7 +23,8 @@ def main():
         )
     )
 
-    renderer.render(
+    Renderer().render(
+        scene=scene,
         input_path="input/Artwork_Featured.gif",
         output_path="output/output.gif"
     )
