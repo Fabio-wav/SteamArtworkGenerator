@@ -40,7 +40,7 @@ class Layer(ABC):
         return self
     
     @abstractmethod
-    def reset(self, context: RenderContext):
+    def reset(self):
         pass
 
     @abstractmethod

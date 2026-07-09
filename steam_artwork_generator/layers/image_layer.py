@@ -47,10 +47,24 @@ class ImageLayer(Layer):
                 Image.Resampling.LANCZOS,
             )
 
+
+    def reset(self):
+        pass
+
+
     def draw(self, context: RenderContext) -> None:
 
+        image = self.image.copy()
+
+        alpha = image.getchannel("A")
+        alpha = alpha.point(
+            lambda p: p * self.transform.opacity // 255
+        )
+
+        image.putalpha(alpha)
+
         context.frame.alpha_composite(
-            self.image,
+            image,
             (
                 self.transform.x,
                 self.transform.y,

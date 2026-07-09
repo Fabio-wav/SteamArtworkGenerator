@@ -1,5 +1,6 @@
 from steam_artwork_generator.animations import Animation
 from steam_artwork_generator.models import RenderContext
+from steam_artwork_generator.easing import linear
 
 
 class MoveAnimation(Animation):
@@ -8,13 +9,16 @@ class MoveAnimation(Animation):
         self,
         start_position: tuple[int, int],
         end_position: tuple[int, int],
+        easing=linear,
     ):
         self.start_position = start_position
         self.end_position = end_position
+        self.easing = easing
+
 
     def update(self, layer, context: RenderContext):
 
-        progress = context.progress
+        progress = self.easing(context.progress)
 
         start_x, start_y = self.start_position
         end_x, end_y = self.end_position

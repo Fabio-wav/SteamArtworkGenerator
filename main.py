@@ -1,15 +1,10 @@
 from steam_artwork_generator.engine.renderer import Renderer
 from steam_artwork_generator.scene import Scene
 
-from steam_artwork_generator.layers import TextLayer
-from steam_artwork_generator.animations import (
-    TypingAnimation,
-    MoveAnimation,
-)
-
+from steam_artwork_generator.layers import ImageLayer
 from steam_artwork_generator.models import (
-    TextStyle,
     Transform,
+    ImageStyle,
 )
 
 
@@ -18,76 +13,27 @@ def main():
     renderer = Renderer()
     scene = Scene()
 
-    terminal = TextStyle(
-        font_path="assets/fonts/consola.ttf",
-        font_size=22,
-        color=(255, 255, 255),
+    style = ImageStyle(
+        width=300,
+        height=300,
     )
 
-    scene.add(
-        TextLayer(
-            text="CAPETINHA.EXE",
-            style=terminal,
-            transform=Transform(
-                x=0,
-                y=40,
-            ),
-        )
-        .add_animation(
-            MoveAnimation(
-                start_position=(0, 40),
-                end_position=(40, 40),
-            ),
-            start_frame=0,
-            duration=30,
-        )
-        .add_animation(
-            TypingAnimation(
-                frame_interval=2,
-            ),
-            start_frame=2,
-        )
+    image = ImageLayer(
+        image_path="assets/images/capetinha.webp",
+        style=style,
+        transform=Transform(
+            x=100,
+            y=100,
+            opacity=128,
+        ),
     )
 
-    scene.add(
-        TextLayer(
-            text="Booting...",
-            style=terminal,
-            transform=Transform(
-                x=40,
-                y=80,
-            ),
-        )
-        .add_animation(
-            TypingAnimation(
-                frame_interval=2,
-            ),
-            start_frame=0,
-        )
-    )
-
-    scene.add(
-        TextLayer(
-            text="Loading Steam API...",
-            style=terminal,
-            transform=Transform(
-                x=40,
-                y=120,
-            ),
-            visible_from=20,
-        )
-        .add_animation(
-            TypingAnimation(
-                frame_interval=2,
-            ),
-            start_frame=20,
-        )
-    )
+    scene.add(image)
 
     renderer.render(
         scene=scene,
         input_path="input/Artwork_Featured.gif",
-        output_path="output/output.gif",
+        output_path="output/opacity_test.gif",
     )
 
 
