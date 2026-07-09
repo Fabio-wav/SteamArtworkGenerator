@@ -31,21 +31,25 @@ def main():
             ),
         ).add_animation(
             TypingAnimation(
-                start_frame=2,
                 frame_interval=2,
-            )
+            ),
+            start_frame=2,
         )
     )
+
     scene.add(
         TextLayer(
             text="Booting...",
             style=terminal,
-            transform=Transform(x=40, y=80),
+            transform=Transform(
+                x=40,
+                y=80,
+            ),
         ).add_animation(
             TypingAnimation(
-                start_frame=0,
                 frame_interval=2,
-            )
+            ),
+            start_frame=0,
         )
     )
 
@@ -53,13 +57,16 @@ def main():
         TextLayer(
             text="Loading Steam API...",
             style=terminal,
-            transform=Transform(x=40, y=120),
+            transform=Transform(
+                x=40,
+                y=120,
+            ),
             visible_from=20,
         ).add_animation(
             TypingAnimation(
-                start_frame=20,
                 frame_interval=2,
-            )
+            ),
+            start_frame=20,
         )
     )
 

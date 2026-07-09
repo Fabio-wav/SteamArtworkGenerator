@@ -40,9 +40,10 @@ class Renderer:
             )
 
             for layer in sorted_layers:
-                layer.reset_frame()
-                for animation in layer.animations:
-                    animation.update(layer, context)
+                layer.reset()
+                for clip in layer.clips:
+                    if clip.is_active(context):
+                        clip.update(layer, context)
                 
                 if layer.is_visible(context):
                     layer.draw(context)

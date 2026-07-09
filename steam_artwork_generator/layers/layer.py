@@ -5,7 +5,7 @@ from steam_artwork_generator.models import (
     RenderContext,
 )
 from steam_artwork_generator.animations import Animation
-
+from steam_artwork_generator.timeline import AnimationClip
 
 
 class Layer(ABC):
@@ -22,14 +22,25 @@ class Layer(ABC):
         self.visible_from = visible_from
         self.visible_until = visible_until
 
-        self.animations: list[Animation] = []
+        self.clips: list[AnimationClip] = []
 
-    def add_animation(self, animation):
-        self.animations.append(animation)
+    def add_animation(
+        self,
+        animation: Animation,
+        start_frame: int = 0,
+        duration: int | None = None,
+    ):
+        self.clips.append(
+            AnimationClip(
+                animation=animation,
+                start_frame=start_frame,
+                duration=duration,
+            )
+        )
         return self
     
     @abstractmethod
-    def reset_frame(self, context: RenderContext):
+    def reset(self, context: RenderContext):
         pass
 
     @abstractmethod

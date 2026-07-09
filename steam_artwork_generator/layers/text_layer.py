@@ -50,5 +50,5 @@ class TextLayer(Layer):
             fill=self.style.color,
         )
     
-    def reset_frame(self):
+    def reset(self):
         self.render_text = self.text
