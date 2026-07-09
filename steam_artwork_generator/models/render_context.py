@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from PIL.Image import Image
 
 
@@ -8,3 +8,7 @@ class RenderContext:
     frame_index: int
     total_frames: int
     duration: int
+    progress: float = 0.0
+
+    def copy(self, **changes):
+        return replace(self, **changes)

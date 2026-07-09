@@ -37,11 +37,16 @@ class AnimationClip:
         if not self.is_active(context):
             return
 
-        local_context = RenderContext(
-            frame=context.frame,
-            frame_index=context.frame_index - self.start_frame,
-            total_frames=context.total_frames,
-            duration=context.duration,
+        local_frame = context.frame_index - self.start_frame
+
+        if self.duration:
+            progress = local_frame / self.duration
+        else:
+            progress = 0
+
+        local_context = context.copy(
+            frame_index=local_frame,
+            progress=progress,
         )
 
         self.animation.update(layer, local_context)

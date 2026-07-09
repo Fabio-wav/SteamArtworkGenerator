@@ -2,7 +2,10 @@ from steam_artwork_generator.engine.renderer import Renderer
 from steam_artwork_generator.scene import Scene
 
 from steam_artwork_generator.layers import TextLayer
-from steam_artwork_generator.animations import TypingAnimation
+from steam_artwork_generator.animations import (
+    TypingAnimation,
+    MoveAnimation,
+)
 
 from steam_artwork_generator.models import (
     TextStyle,
@@ -26,10 +29,19 @@ def main():
             text="CAPETINHA.EXE",
             style=terminal,
             transform=Transform(
-                x=40,
+                x=0,
                 y=40,
             ),
-        ).add_animation(
+        )
+        .add_animation(
+            MoveAnimation(
+                start_position=(0, 40),
+                end_position=(40, 40),
+            ),
+            start_frame=0,
+            duration=30,
+        )
+        .add_animation(
             TypingAnimation(
                 frame_interval=2,
             ),
@@ -45,7 +57,8 @@ def main():
                 x=40,
                 y=80,
             ),
-        ).add_animation(
+        )
+        .add_animation(
             TypingAnimation(
                 frame_interval=2,
             ),
@@ -62,7 +75,8 @@ def main():
                 y=120,
             ),
             visible_from=20,
-        ).add_animation(
+        )
+        .add_animation(
             TypingAnimation(
                 frame_interval=2,
             ),
